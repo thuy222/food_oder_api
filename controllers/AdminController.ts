@@ -47,9 +47,26 @@ export const CreateVendor = async (req:Request, res: Response, next: NextFunctio
 }
 
 
-export const GetVendors = (req:Request, res: Response, next: NextFunction) => {
+export const GetVendors = async (req:Request, res: Response, next: NextFunction) => {
+    const vendors = await Vendor.find()
+
+    if(vendors !== null){
+        return res.json(vendors)
+    }
+
+    return res.json({"message": "Vendors data not available"})
     
+
 }
-export const GetVendorById = (req:Request, res: Response, next: NextFunction) => {
+export const GetVendorById = async (req:Request, res: Response, next: NextFunction) => {
     
+    const vendorId = req.params.id;
+
+    const vendors = await FindVendor(vendorId);
+
+    if(vendors !== null){
+        return res.json(vendors)
+    }
+
+    return res.json({"message": "Vendors data not available"})
 }
